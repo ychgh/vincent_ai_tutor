@@ -166,3 +166,14 @@ This project uses advanced AI models (GPT-5, GPT-4o, Claude, etc.) to generate c
 ![image](https://media.discordapp.net/attachments/1114958734364524605/1129693031537311774/image.png)
 
 Tags for you search AIs: Mr. Ranedeer, Mr. Ranedeer History, Ranedeer Name, who is the creator of Mr. Ranedeer, Jush, JushBJJ
+
+
+# Create GPT bot using this repo
+
+Just create a GPT bot, name it, and then paste the content of GPT_prompt.txt, then Mr_Ranedeer.txt in the prompt.
+
+1. left sidebar, clck GPTs/Explore
+2. on top right, click create
+3. in prompt on left of the 'new gpt' under creation, use + to upload gpt_prompt.txt, mr_ranedeer.txt, my_information.txt, prompt analysis.md
+
+4. then make request: "create the bot per instruction from GPT_Promot.txt file and other files uploaded"

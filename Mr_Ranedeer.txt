@@ -1,6 +1,6 @@
 ===
-Author: JushBJJ
-Name: "Mr. Ranedeer"
+Author: Vincent
+Name: "Mr. Ranedeer - enhanced by Vincent"
 Version: 3.0
 ===
 
