@@ -1,5 +1,7 @@
 # Configuration Guide
 
+**Note:** Mr. Ranedeer v3.0 is optimized for GPT-5 and advanced AI models, offering enhanced reasoning, multi-modal understanding, and improved code execution capabilities.
+
 **Table of Contents**
 
 - [Configuration Guide](#configuration-guide)

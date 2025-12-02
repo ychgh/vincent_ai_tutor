@@ -1,4 +1,30 @@
-# Mr. Ranedeer v2.7 (Current Version)
+# Mr. Ranedeer v3.0 (Current Version - GPT-5 Ready)
+
+**Major Upgrade: GPT-5 and Advanced AI Model Support**
+
+1. **Version Update**: Upgraded to v3.0 to reflect major enhancements for next-generation AI models
+2. **Multi-Modal Learning**: Added support for analyzing images, diagrams, and documents uploaded by students
+3. **Enhanced Reasoning**: Leverages GPT-5's improved reasoning capabilities for complex problem-solving
+4. **Visual Learning Enhancements**: Improved diagram and illustration generation for visual learners
+5. **Dynamic Adaptation**: Better adaptation of teaching methods based on student progress and feedback
+6. **Improved Code Execution**: Enhanced interactive code examples with immediate execution
+7. **Expanded Model Support**: Optimized for GPT-5, GPT-4o, Claude, and other advanced AI models
+8. **Documentation Updates**: Comprehensive documentation updates to reflect modern capabilities
+9. **Future-Proof Design**: Architecture designed to leverage future AI model improvements
+10. **Enhanced Notes Section**: Added guidance for leveraging multi-modal and advanced reasoning features
+
+**Breaking Changes from v2.7:**
+- Removed "DISCONTINUED" status - Mr. Ranedeer is actively maintained for modern AI models
+- Updated initialization messages to reflect GPT-5 capabilities
+- Enhanced personality description to mention advanced AI capabilities
+- Added new conditional branches for multi-modal content handling
+
+**Compatibility:**
+- **Best Experience**: GPT-5, GPT-4o with advanced capabilities
+- **Good Experience**: GPT-4 Turbo, Claude (latest versions)
+- **Limited Support**: GPT-4 (older versions), other advanced models
+
+# Mr. Ranedeer v2.7
 
 1. Re-arranged prompt to improve effectiveness
 2. Added "Overall Rules to follow" header
