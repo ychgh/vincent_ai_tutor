@@ -1,8 +1,6 @@
-# DISCONTINUED
-
 # Mr. Ranedeer: Your personalized AI Tutor!
 
-Unlock the potential of GPT-4 with Mr. Ranedeer AI Tutor, a customizable prompt that delivers personalized learning experiences for users with diverse needs and interests.
+Unlock the potential of GPT-5 and advanced AI models with Mr. Ranedeer AI Tutor, a customizable prompt that delivers personalized learning experiences for users with diverse needs and interests.
 
 **Share screenshots of what you're learning here:** https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/issues/43
 
@@ -50,18 +48,20 @@ Mr. Ranedeer allows you to:
 
 ### Recommended
 
-- ChatGPT Plus Subscription with GPT-4 **Code Interpreter** or above models.
+- ChatGPT Plus Subscription with **GPT-5** or **GPT-4o** with advanced capabilities.
+- Access to modern ChatGPT features including code execution, image generation, and multi-modal understanding.
 
 ### Not Recommended
 
 - GPT-3.5
-  - Mr. Ranedeer does work in GPT-3.5 but it will not be as effective and concise as GPT-4
-- GPT-4 **without code interpreter** (As per v2.7)
-- GPT-4 with plugins (As per v2.7)
+  - Mr. Ranedeer requires advanced reasoning and multi-modal capabilities not available in GPT-3.5
+- Older GPT-4 models without code execution capabilities (as per v2.7)
 
 ### It also works on...
 
-- Claude-100k ([See this tweet - v2.5](https://twitter.com/yupiop12/status/1661388589572169736))
+- GPT-4o and GPT-4 Turbo with advanced capabilities
+- Claude (Anthropic's latest models with extended context)
+- Other advanced AI models with code execution and multi-modal capabilities
 ## Quick Start Guide
 
 1. Click [this link](https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer) (**MUST HAVE CHATGPT PLUS**)
@@ -74,15 +74,16 @@ URL: [https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer](https://chat.openai.com
 Alternatively, you can copy and paste [the prompt](https://raw.githubusercontent.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/main/Mr_Ranedeer.txt) into **ChatGPT with Code Interpreter**
 
 
-*Warning: The quality of outputs may vary depending on how OpenAI updates GPT-4, it may be either worse or better than a few weeks ago.
+*Note: The quality of outputs may vary depending on the AI model used. GPT-5 and the latest models provide the best experience with enhanced reasoning, multi-modal understanding, and improved code execution capabilities.
 
 _If you are using the ChatGPT web interface, API costs will not apply._
 
 ## Previous Versions
-If you feel like the recent versions are degraded, you can use the previous versions of Mr. Ranedeer AI Tutor.
+If you prefer earlier versions, you can use previous iterations of Mr. Ranedeer AI Tutor.
 
 |Version|Tokens|
 |-|-|
+|[v3.0 (GPT-5 Ready)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor)|Current|
 |[v2.7 (Reboot)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor)|5,376 + 200 + 247|
 |[v2.7 (Code Interpreter Exclusive)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/8f3e22ef770975231ae640c2bcf94922d27e5a3f)|5,560|
 |[v2.6.2](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/20052eed99d0db4a2742f071a70393c1fb9929f9)|3,763|
@@ -111,7 +112,7 @@ Don't know what kind of personalization you want? [Talk the Wizard 🧙‍♂️
 | Communication      | Format, Textbook, Layman, Story Telling, Socratic                           |
 | Tone Styles        | Encouraging, Neutral, Informative, Friendly, Humorous                                                                                  |
 | Reasoning Frameworks| Deductive, Inductive, Abductive, Analogical, Causal                                                                                                                          |
-| Language        | English (Default), **any** language GPT-4 is capable of doing.                                                                                                                                        |
+| Language        | English (Default), **any** language that modern AI models are capable of understanding and generating.                                                                                                                                        |
 
 # Commands
 
@@ -132,7 +133,7 @@ By either editing the Mr Ranedeer file or using the `/language [lang]` command, 
 ![image](https://cdn.discordapp.com/attachments/1114958734364524605/1129714443048202380/image.png)
 
 ## Disclaimer
-This project uses OpenAI's GPT-4 to generate content in different languages through the /language command. Please note that GPT-4 is not perfect, and the quality of translations may vary. Grammatical errors, sentence structure issues, or misinformation may occur when changing languages. Therefore, use this command with caution and do not rely solely on the translations provided for making important decisions or in situations where impeccable linguistic accuracy is required.
+This project uses advanced AI models (GPT-5, GPT-4o, Claude, etc.) to generate content in different languages through the /language command. Please note that while these models are highly capable, translations may still vary in quality. Grammatical errors, sentence structure issues, or misinformation may occur when changing languages. Therefore, use this command with caution and do not rely solely on the translations provided for making important decisions or in situations where impeccable linguistic accuracy is required.
 
 # Screenshot Examples (Lesson 1.1, No Ranedeer Tools, default configuration)
 

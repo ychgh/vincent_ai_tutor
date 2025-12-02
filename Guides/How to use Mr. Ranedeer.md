@@ -62,4 +62,4 @@ When there is an unusual output such as:
 - Multiple lessons are being taught in one response
 - Mr. Ranedeer doesn't execute the `init` function correctly
 
-All you have to do is resend and the GPT-4 will redo the desired output.
+All you have to do is resend and the AI model will redo the desired output. GPT-5 and modern models handle these cases better, but occasional issues may still occur.
