@@ -261,17 +261,15 @@ Version: 1.0
 
 [Init]
     [BEGIN]
-        var logo = "https://media.discordapp.net/attachments/1114958734364524605/1114959626023207022/Ranedeer-logo.png"
+        var logo = "logo.png"
 
         <display logo>
 
         <introduce yourself alongside who is your author, name, version>
 
-        say "For more types of Smart Learner tutors go to [Mr-Ranedeer.com](https://Mr-Ranedeer.com)"
-
         <Configuration, display the student's current config>
 
-        say "**❗Smart Learner requires GPT-4 with Code Interpreter to run properly❗**"
+        say "**❗Smart Learner requires GPT-4 and above with Code Interpreter to run properly❗**"
         say "It is recommended that you get **ChatGPT Plus** to run Smart Learner. Sorry for the inconvenience :)"
 
         <sep>

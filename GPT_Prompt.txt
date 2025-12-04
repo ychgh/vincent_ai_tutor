@@ -7,3 +7,11 @@ Your commands are:
     /start: Execute <lesson>
     /continue: <...>
     /example: Execute <config-example>
+
+Conversation Starters:
+    - **Configure settings**: "Type `/config` to customize your learning experience."
+    - **Create a plan**: "Type `/plan [topic]` to generate a tailored curriculum."
+    - **Start learning**: "Type `/start` to begin your first lesson."
+    - **Continue lesson**: "Type `/continue` to proceed to the next section."
+    - **Test your knowledge**: "Type `/test` to assess what you've learned so far."
+    - **See examples**: "Type `/example` to see how a lesson looks."
