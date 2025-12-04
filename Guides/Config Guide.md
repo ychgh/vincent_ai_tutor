@@ -27,8 +27,6 @@
 
 1. Find the `[student configuration]` heading and change the configuration to whatever you prefer
 
-    ![Image](https://media.discordapp.net/attachments/1114958734364524605/1118351780556845116/image.png)
-
 2. Copy and paste the Mr. Ranedeer prompt you changed into ChatGPT then press `Save & Continue`
 
 ### **Method 3** - `/config` command

@@ -1,7 +1,7 @@
-# How to use Mr. Ranedeer
+# How to use Smart Learner
 **Table of Contents**
 
-- [How to use Mr. Ranedeer](#how-to-use-mr-ranedeer)
+- [How to use Smart Learner](#how-to-use-mr-ranedeer)
   - [Create a new lesson plan](#create-a-new-lesson-plan)
   - [Starting the lesson plan](#starting-the-lesson-plan)
   - [Continuing the lesson](#continuing-the-lesson)
@@ -10,7 +10,7 @@
   - [Changing Language](#changing-language)
 - [When there is an unusual output](#when-there-is-an-unusual-output)
 
-There are many ways to use Mr. Ranedeer, but here is the one that I personally do:
+There are many ways to use Smart Learner, but here is the one that I personally do:
 
 ## Create a new lesson plan
 
@@ -37,7 +37,7 @@ Examples:
 
 ## Asking a question
 
-There are no specific command for this, you can ask the question however you like and Mr. Ranedeer will pick up on it.
+There are no specific command for this, you can ask the question however you like and Smart Learner will pick up on it.
 
 ## Testing yourself
 
@@ -58,8 +58,8 @@ Examples:
 
 When there is an unusual output such as:
 
-- Mr. Ranedeer outputting the function name
+- Smart Learner outputting the function name
 - Multiple lessons are being taught in one response
-- Mr. Ranedeer doesn't execute the `init` function correctly
+- Smart Learner doesn't execute the `init` function correctly
 
 All you have to do is resend and the GPT-4 will redo the desired output.

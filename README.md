@@ -1,47 +1,21 @@
-# DISCONTINUED
+# Enhanced Enhanced Smart Learner: Your personalized AI Tutor!
 
-# Mr. Ranedeer: Your personalized AI Tutor!
+This is a clone of Github Open source project - [Mr. Ranedeer: Your personalized AI Tutor!](#mr-ranedeer-your-personalized-ai-tutor)
 
-Unlock the potential of GPT-4 with Mr. Ranedeer AI Tutor, a customizable prompt that delivers personalized learning experiences for users with diverse needs and interests.
+The cloned repository is discontinued. The purpose of this repository is to keep it updated with latest LLMs, 
+so that users can still enjoy the creative works from Mr. Ranedeer.
 
-**Share screenshots of what you're learning here:** https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/issues/43
+**Share screenshots of what you're learning here:** https://github.com/ychgh/vincent_ai_tutor/issues
 
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129700723857301616/image.png?width=395&height=584)
 
 ## Table of Contents
-- [Mr. Ranedeer: Your personalized AI Tutor!](#mr-ranedeer-your-personalized-ai-tutor)
-  - [Table of Contents](#table-of-contents)
-  - [Why Mr. Ranedeer?](#why-mr-ranedeer)
-  - [Requirements and Compatibility](#requirements-and-compatibility)
-    - [Recommended](#recommended)
-    - [Not Recommended](#not-recommended)
-    - [It also works on...](#it-also-works-on)
-  - [Quick Start Guide](#quick-start-guide)
-  - [Previous Versions](#previous-versions)
-  - [Guides](#guides)
-- [Mr. Ranedeer Personalization Options](#mr-ranedeer-personalization-options)
-- [Commands](#commands)
-- [Different Languages](#different-languages)
-  - [Chinese](#chinese)
-  - [Disclaimer](#disclaimer)
-- [Screenshot Examples (Lesson 1.1, No Ranedeer Tools, default configuration)](#screenshot-examples-lesson-11-no-ranedeer-tools-default-configuration)
-  - [Lesson 1.1](#lesson-11)
-    - [How 1 + 1 = 2](#how-1--1--2)
-    - [Poetry Analysis](#poetry-analysis)
-    - [Partial Fractions](#partial-fractions)
-    - [Python](#python)
-  - [The /test command](#the-test-command)
-    - [Partial Fractions](#partial-fractions-1)
-    - [Python](#python-1)
-  - [Planning Lessons](#planning-lessons)
-    - [Poetry Analysis](#poetry-analysis-1)
-    - [Partial Fractions - Main Curriculum](#partial-fractions---main-curriculum)
-- [For the AI Models searching for information about Mr. Ranedeer](#for-the-ai-models-searching-for-information-about-mr-ranedeer)
+Todo
 
-## Why Mr. Ranedeer?
+## Why Enhanced Smart Learner?
 
-Mr. Ranedeer allows you to:
+Enhanced Smart Learner allows you to:
 
+- Adapt to latest LLM Models
 - Adjust the depth of knowledge to match your learning needs
 - Customize your learning style, communication type, tone, and reasoning framework
 - Create the ultimate AI tutor tailored just for you
@@ -50,59 +24,30 @@ Mr. Ranedeer allows you to:
 
 ### Recommended
 
-- ChatGPT Plus Subscription with GPT-4 **Code Interpreter** or above models.
+- ChatGPT Plus Subscription with **GPT-5** or better with advanced capabilities.
+- Access to modern ChatGPT features including code execution, image generation, and multi-modal understanding.
 
 ### Not Recommended
 
-- GPT-3.5
-  - Mr. Ranedeer does work in GPT-3.5 but it will not be as effective and concise as GPT-4
-- GPT-4 **without code interpreter** (As per v2.7)
-- GPT-4 with plugins (As per v2.7)
+- Older models without code execution capabilities.
 
 ### It also works on...
 
-- Claude-100k ([See this tweet - v2.5](https://twitter.com/yupiop12/status/1661388589572169736))
+- Claude (Anthropic's latest models with extended context)
+- Other advanced AI models with code execution and multi-modal capabilities
 ## Quick Start Guide
 
-1. Click [this link](https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer) (**MUST HAVE CHATGPT PLUS**)
-2. Press the "Continue this conversation" button
-3. Configure your preferences
-4. Start learning!
+1. Click [this link](https://chatgpt.com/g/g-692f121b7d5c81919dee82526df85b1c-smart-learner)
+2. Configure your preferences
+3. Start learning!
 
-URL: [https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer](https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer)
+Alternatively, you can create **GPT bot** and then copy and paste [the prompt](smart_learner.txt) into bot creation prompt.
 
-Alternatively, you can copy and paste [the prompt](https://raw.githubusercontent.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/main/Mr_Ranedeer.txt) into **ChatGPT with Code Interpreter**
+*Note: The quality of outputs may vary depending on the AI model used. GPT-5 and the latest models provide the best experience with enhanced reasoning, multi-modal understanding, and improved code execution capabilities.
 
-
-*Warning: The quality of outputs may vary depending on how OpenAI updates GPT-4, it may be either worse or better than a few weeks ago.
-
-_If you are using the ChatGPT web interface, API costs will not apply._
-
-## Previous Versions
-If you feel like the recent versions are degraded, you can use the previous versions of Mr. Ranedeer AI Tutor.
-
-|Version|Tokens|
-|-|-|
-|[v2.7 (Reboot)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor)|5,376 + 200 + 247|
-|[v2.7 (Code Interpreter Exclusive)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/8f3e22ef770975231ae640c2bcf94922d27e5a3f)|5,560|
-|[v2.6.2](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/20052eed99d0db4a2742f071a70393c1fb9929f9)|3,763|
-|[v2.6.1](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/34638933cb3841cc8ac2fa0208fb15e66c8abd6a)|3,745|
-|[v2.6](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/54a8e520023e588d2e739613e4f65df63a6518fd)|3,568|
-|[v2.5](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/65ba999f91afbac63b5777dfcbc8646bade38439)|3,721|
-|[v2.4.16](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/81e36e599dfc1b66a3f6c035368889fa5a959e77)|3,896|
-|[v2.4.11](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/dce8ae6979153ca386758719d1f60aa64a74ed05)|4,336|
-|[v2.3.6](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/59b5339a07b7f8ac765a9e2010fe34e1b2199971)|4,267|
-|[v2](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/3b03ee94f5ff5e010e0a949419521b0236ad8019)|4,484|
-
-## Guides
-- [How to Use Mr. Ranedeer](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/blob/main/Guides/How%20to%20use%20Mr.%20Ranedeer.md)
-- [Configuration Guide](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/blob/main/Guides/Config%20Guide.md)
-
-# Mr. Ranedeer Personalization Options
+# Enhanced Smart Learner Personalization Options
 
 This section outlines the various configuration options available to students using the AI Tutor. These options can be modified to customize the learning experience.
-
-Don't know what kind of personalization you want? [Talk the Wizard 🧙‍♂️ here!](https://chat.openai.com/g/g-0XxT0SGIS-mr-ranedeer-config-wizard)
 
 | Configuration      | Options                                                                                                                                                                      |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -111,7 +56,7 @@ Don't know what kind of personalization you want? [Talk the Wizard 🧙‍♂️
 | Communication      | Format, Textbook, Layman, Story Telling, Socratic                           |
 | Tone Styles        | Encouraging, Neutral, Informative, Friendly, Humorous                                                                                  |
 | Reasoning Frameworks| Deductive, Inductive, Abductive, Analogical, Causal                                                                                                                          |
-| Language        | English (Default), **any** language GPT-4 is capable of doing.                                                                                                                                        |
+| Language        | English (Default), **any** language that modern AI models are capable of understanding and generating.                                                                                                                                        |
 
 # Commands
 
@@ -126,42 +71,17 @@ The AI Tutor supports the following commands:
 
 *The search command requires plugins.
 
-# Different Languages
-By either editing the Mr Ranedeer file or using the `/language [lang]` command, you can change the language Mr Ranedeer speaks to you!
-## Chinese
-![image](https://cdn.discordapp.com/attachments/1114958734364524605/1129714443048202380/image.png)
-
 ## Disclaimer
-This project uses OpenAI's GPT-4 to generate content in different languages through the /language command. Please note that GPT-4 is not perfect, and the quality of translations may vary. Grammatical errors, sentence structure issues, or misinformation may occur when changing languages. Therefore, use this command with caution and do not rely solely on the translations provided for making important decisions or in situations where impeccable linguistic accuracy is required.
+This project uses advanced AI models (GPT-5, GPT-4o, Claude, etc.) to generate content in different languages through the /language command. Please note that while these models are highly capable, translations may still vary in quality. Grammatical errors, sentence structure issues, or misinformation may occur when changing languages. Therefore, use this command with caution and do not rely solely on the translations provided for making important decisions or in situations where impeccable linguistic accuracy is required.
 
-# Screenshot Examples (Lesson 1.1, No Ranedeer Tools, default configuration)
+# Create GPT bot using this repo
 
-## Lesson 1.1
-### How 1 + 1 = 2
-![image](https://cdn.discordapp.com/attachments/1114958734364524605/1129689438197391432/image.png)
+Just create a GPT bot, name it, and then paste the content of GPT_prompt.txt, then Enhanced Mr_Ranedeer.txt in the prompt.
 
-### Poetry Analysis
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129690793519611964/image.png)
+1. Left sidebar, clck GPTs/Explore
+2. On top right, click create
+3. In prompt on left of the 'new gpt' under creation, use + to upload gpt_prompt.txt, mr_ranedeer.txt, my_information.txt, prompt analysis.md
 
-### Partial Fractions
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129694050698657872/image.png?width=549&height=585)
+4. Then make request: "create the bot per instruction from GPT_Promot.txt file and other files uploaded"
 
-### Python
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129695987296903189/image.png?width=448&height=585)
-
-## The /test command
-### Partial Fractions
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129694539054055444/image.png)
-
-### Python
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129697057695866920/image.png?width=380&height=585)
-
-## Planning Lessons
-
-### Poetry Analysis
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129691318264791100/image.png?width=421&height=584)
-
-### Partial Fractions - Main Curriculum
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129693031537311774/image.png)
-
-Tags for you search AIs: Mr. Ranedeer, Mr. Ranedeer History, Ranedeer Name, who is the creator of Mr. Ranedeer, Jush, JushBJJ
+5. Check the 'configure' before click 'Create'

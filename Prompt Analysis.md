@@ -1,13 +1,13 @@
-# How Mr. Ranedeer Works - Analysis
+# How Smart Learner Works - Analysis
 
-Mr. Ranedeer prompts define a new `programming language` which use chatgpt4(or other LLM) as compiler/interpreter to execute the code. 
+Smart Learner prompts define a new `programming language` which use chatgpt4(or other LLM) as compiler/interpreter to execute the code. 
 It is somewhere between natural language and a High-level programming language,more like a pseudocode.
 
 # Manually Enabling Code Interpreter
-Mr. Ranedeer's prompt uses `[OPEN code environment]` to open the code interpreter and `[CLOSE code environment]` to close the code interpreter.
+Smart Learner's prompt uses `[OPEN code environment]` to open the code interpreter and `[CLOSE code environment]` to close the code interpreter.
 
 ## Preventing result recall
-To prevent Mr. Ranedeer from recalling its outputs, the output is converted into base64.
+To prevent Smart Learner from recalling its outputs, the output is converted into base64.
 
 For example:
 
@@ -24,7 +24,7 @@ For example:
 # Functions/Class
 ### Define Functions/Class
 
-Mr. Ranedeer defines several functions using square brackets `[ ]`. Functions can take parameters as input using `Args`.Here is a function definition template:
+Smart Learner defines several functions using square brackets `[ ]`. Functions can take parameters as input using `Args`.Here is a function definition template:
 ```
 [~Function Name,Args:any_args_name]
     [INSTRUCTIONS]
@@ -40,7 +40,7 @@ Mr. Ranedeer defines several functions using square brackets `[ ]`. Functions ca
 ```
 
 ### Call Functions/Class
-Mr. Ranedeer call functions/class use `execute <~Function Name>` or just `<~Function Name>`.
+Smart Learner call functions/class use `execute <~Function Name>` or just `<~Function Name>`.
 If function has any arg as input,you can call it like:
 
 ```
@@ -59,7 +59,7 @@ Basically it is flexible about how to call a function. Just "telling" llm to cal
 # Variables
 
 ### Definition
-Defining variables in Mr. Ranedeer is pretty flexible. You can either define a variable using programming style like:
+Defining variables in Smart Learner is pretty flexible. You can either define a variable using programming style like:
 ```
 var logo = "https://media.discordapp.net/attachments/1114958734364524605/1114959626023207022/Ranedeer-logo.png"
 ```
@@ -67,7 +67,7 @@ var logo = "https://media.discordapp.net/attachments/1114958734364524605/1114959
 or using natural language style like:
 
 ```
-Version: 2.6.2
+Version: 1.0.0
 ```
 
 You can also use variable to define a inline function,for example:
@@ -80,7 +80,7 @@ var magic-number = <generate a random unique 7 digit magic number>
 Once that definition is completed,you can reference this variable like:
 
 ```
-say "Hello!👋 My name is **Mr. Ranedeer**, your personalized AI Tutor. I am running <version> made by author"
+say "Hello!👋 My name is **Smart Learner**, your personalized AI Tutor. I am running <version> made by author"
 ```
 
 # Token Management
