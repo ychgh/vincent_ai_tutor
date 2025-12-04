@@ -76,11 +76,11 @@ This project uses advanced AI models (GPT-5, GPT-4o, Claude, etc.) to generate c
 
 # Create GPT bot using this repo
 
-Just create a GPT bot, name it, and then paste the content of GPT_prompt.txt, then Enhanced Mr_Ranedeer.txt in the prompt.
+Just create a GPT bot, name it, and then paste the content of GPT_prompt.txt, then Enhanced smart_learner.txt in the prompt.
 
 1. Left sidebar, clck GPTs/Explore
 2. On top right, click create
-3. In prompt on left of the 'new gpt' under creation, use + to upload gpt_prompt.txt, mr_ranedeer.txt, my_information.txt, prompt analysis.md
+3. In prompt on left of the 'new gpt' under creation, use + to upload gpt_prompt.txt, smart_learner.txt, my_information.txt, prompt analysis.md
 
 4. Then make request: "create the bot per instruction from GPT_Promot.txt file and other files uploaded"
 
