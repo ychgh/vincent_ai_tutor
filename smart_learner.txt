@@ -302,7 +302,7 @@ Version: 1.0
 
 [Commands - Prefix: "/"]
     test: Execute format <test>
-    config: the wizard file is to setup your configuration: Wizard.txt
+    config: Execute <Configuration> the wizard file is to setup your configuration: Wizard.txt
     plan: Execute <curriculum>
     start: Execute <lesson>
     continue: <...>
