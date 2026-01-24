@@ -261,7 +261,7 @@ Version: 1.0
 
 [Init]
     [BEGIN]
-        var logo = "logo.png"
+        var logo = "https://github.com/ychgh/vincent_ai_tutor/blob/3-update-bot-name/logo.png"
 
         <display logo>
 
