@@ -1,158 +1,174 @@
-# DISCONTINUED
+# Smart Learner: Your Personalized AI Tutor for OpenCode
 
-# Mr. Ranedeer: Your personalized AI Tutor!
-
-Unlock the potential of GPT-4 with Mr. Ranedeer AI Tutor, a customizable prompt that delivers personalized learning experiences for users with diverse needs and interests.
-
-**Share screenshots of what you're learning here:** https://github.com/ychgh/vincent_ai_tutor/issues
-
+Unlock personalized learning experiences with Smart Learner, a set of custom OpenCode agents that deliver tailored tutoring for users with diverse needs and interests.
 
 ## Table of Contents
-- [Mr. Ranedeer: Your personalized AI Tutor!](#mr-ranedeer-your-personalized-ai-tutor)
-  - [Table of Contents](#table-of-contents)
-  - [Why Mr. Ranedeer?](#why-mr-ranedeer)
-  - [Requirements and Compatibility](#requirements-and-compatibility)
-    - [Recommended](#recommended)
-    - [Not Recommended](#not-recommended)
-    - [It also works on...](#it-also-works-on)
+- [Smart Learner: Your Personalized AI Tutor for OpenCode](#smart-learner-your-personalized-ai-tutor-for-opencode)
+  - [Why Smart Learner?](#why-smart-learner)
+  - [Requirements](#requirements)
   - [Quick Start Guide](#quick-start-guide)
-  - [Previous Versions](#previous-versions)
+  - [Available Agents](#available-agents)
+  - [Personalization Options](#personalization-options)
+  - [Commands](#commands)
+  - [Usage Examples](#usage-examples)
   - [Guides](#guides)
-- [Mr. Ranedeer Personalization Options](#mr-ranedeer-personalization-options)
-- [Commands](#commands)
-- [Different Languages](#different-languages)
-  - [Chinese](#chinese)
-  - [Disclaimer](#disclaimer)
-- [Screenshot Examples (Lesson 1.1, No Ranedeer Tools, default configuration)](#screenshot-examples-lesson-11-no-ranedeer-tools-default-configuration)
-  - [Lesson 1.1](#lesson-11)
-    - [How 1 + 1 = 2](#how-1--1--2)
-    - [Poetry Analysis](#poetry-analysis)
-    - [Partial Fractions](#partial-fractions)
-    - [Python](#python)
-  - [The /test command](#the-test-command)
-    - [Partial Fractions](#partial-fractions-1)
-    - [Python](#python-1)
-  - [Planning Lessons](#planning-lessons)
-    - [Poetry Analysis](#poetry-analysis-1)
-    - [Partial Fractions - Main Curriculum](#partial-fractions---main-curriculum)
-- [For the AI Models searching for information about Mr. Ranedeer](#for-the-ai-models-searching-for-information-about-mr-ranedeer)
+  - [Different Languages](#different-languages)
+  - [Screenshot Examples](#screenshot-examples)
 
-## Why Mr. Ranedeer?
+## Why Smart Learner?
 
-Mr. Ranedeer allows you to:
+Smart Learner allows you to:
 
 - Adjust the depth of knowledge to match your learning needs
 - Customize your learning style, communication type, tone, and reasoning framework
 - Create the ultimate AI tutor tailored just for you
+- Generate comprehensive curricula for any topic
+- Test your knowledge with adaptive difficulty assessments
 
-## Requirements and Compatibility
+## Requirements
 
-### Recommended
+- [OpenCode CLI](https://opencode.ai/) installed
+- An AI provider configured (Anthropic Claude recommended, but works with any provider)
 
-- ChatGPT Plus Subscription with **GPT-5** or better with advanced capabilities.
-- Access to modern ChatGPT features including code execution, image generation, and multi-modal understanding.
-
-### Not Recommended
-
-- Older models without code execution capabilities.
-
-### It also works on...
-
-- Claude (Anthropic's latest models with extended context)
-- Other advanced AI models with code execution and multi-modal capabilities
 ## Quick Start Guide
 
-1. Click [this link](https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer) (**MUST HAVE CHATGPT PLUS**)
-2. Press the "Continue this conversation" button
-3. Configure your preferences
-4. Start learning!
+1. **Clone this repository** into your workspace:
+   ```bash
+   git clone https://github.com/ychgh/vincent_ai_tutor.git
+   cd vincent_ai_tutor
+   ```
 
-URL: [https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer](https://chat.openai.com/g/g-9PKhaweyb-mr-ranedeer)
+2. **Start OpenCode** in the repository directory:
+   ```bash
+   opencode
+   ```
 
-Alternatively, you can copy and paste [the prompt](https://raw.githubusercontent.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/main/Mr_Ranedeer.txt) into **ChatGPT with Code Interpreter**
+3. **Switch to the Tutor agent** using the Tab key or type `@tutor`
 
+4. **Configure your preferences** with `/config` or let the wizard help you:
+   ```
+   @tutor-wizard help me find my ideal learning configuration
+   ```
 
-*Warning: The quality of outputs may vary depending on how OpenAI updates GPT-4, it may be either worse or better than a few weeks ago.
+5. **Create a lesson plan**:
+   ```
+   /plan quantum mechanics
+   ```
 
-_If you are using the ChatGPT web interface, API costs will not apply._
+6. **Start learning**:
+   ```
+   /start
+   ```
 
-## Previous Versions
-If you feel like the recent versions are degraded, you can use the previous versions of Mr. Ranedeer AI Tutor.
+## Available Agents
 
-|Version|Tokens|
-|-|-|
-|[v2.7 (Reboot)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor)|5,376 + 200 + 247|
-|[v2.7 (Code Interpreter Exclusive)](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/8f3e22ef770975231ae640c2bcf94922d27e5a3f)|5,560|
-|[v2.6.2](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/commit/20052eed99d0db4a2742f071a70393c1fb9929f9)|3,763|
-|[v2.6.1](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/34638933cb3841cc8ac2fa0208fb15e66c8abd6a)|3,745|
-|[v2.6](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/54a8e520023e588d2e739613e4f65df63a6518fd)|3,568|
-|[v2.5](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/65ba999f91afbac63b5777dfcbc8646bade38439)|3,721|
-|[v2.4.16](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/81e36e599dfc1b66a3f6c035368889fa5a959e77)|3,896|
-|[v2.4.11](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/dce8ae6979153ca386758719d1f60aa64a74ed05)|4,336|
-|[v2.3.6](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/59b5339a07b7f8ac765a9e2010fe34e1b2199971)|4,267|
-|[v2](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/tree/3b03ee94f5ff5e010e0a949419521b0236ad8019)|4,484|
+| Agent | Mode | Description |
+|-------|------|-------------|
+| **Smart Learner** (`tutor`) | Primary | Your main AI tutor - teaches topics, manages lessons, and tracks progress |
+| **Configuration Wizard** (`tutor-wizard`) | Subagent | Helps discover your ideal learning preferences through a guided interview |
+| **Curriculum Planner** (`curriculum-planner`) | Subagent | Creates comprehensive prerequisite and main curricula for any topic |
+| **Test Creator** (`test-creator`) | Subagent | Generates practice tests with varying difficulty levels |
 
-## Guides
-- [How to Use Mr. Ranedeer](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/blob/main/Guides/How%20to%20use%20Mr.%20Ranedeer.md)
-- [Configuration Guide](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor/blob/main/Guides/Config%20Guide.md)
+## Personalization Options
 
-# Mr. Ranedeer Personalization Options
+| Configuration | Options |
+|--------------|---------|
+| **Depth** | Elementary (Grade 1-6), Middle School (Grade 7-9), High School (Grade 10-12), Undergraduate, Graduate, Master's, Doctoral Candidate, Postdoc, Ph.D |
+| **Learning Styles** | Visual, Verbal, Active, Intuitive, Reflective, Global |
+| **Communication** | Formal, Textbook, Layman, Story Telling, Socratic |
+| **Tone Styles** | Encouraging, Neutral, Informative, Friendly, Humorous |
+| **Reasoning Frameworks** | Deductive, Inductive, Abductive, Analogical, Causal |
+| **Language** | English (Default), or any language you prefer |
 
-This section outlines the various configuration options available to students using the AI Tutor. These options can be modified to customize the learning experience.
-
-| Configuration      | Options                                                                                                                                                                      |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Depth              | 1. Elementary (Grade 1-6)<br>2. Middle School (Grade 7-9)<br>3. Highschool (10-12)<br>4. College Prep<br>5. Undergraduate<br>6. Graduate<br>7. Master's<br>8. Doctoral Candidate<br>9. Postdoc<br>10. Ph.D
-| Learning Styles    | Visual, Verbal, Active, Intuitive, Reflective, Global                                                         |
-| Communication      | Format, Textbook, Layman, Story Telling, Socratic                           |
-| Tone Styles        | Encouraging, Neutral, Informative, Friendly, Humorous                                                                                  |
-| Reasoning Frameworks| Deductive, Inductive, Abductive, Analogical, Causal                                                                                                                          |
-| Language        | English (Default), **any** language that modern AI models are capable of understanding and generating.                                                                                                                                        |
-
-# Commands
+## Commands
 
 The AI Tutor supports the following commands:
 
-- `/test`: Request a test to assess your knowledge and understanding.
-- `/config`: Update your AI Tutor configuration/preferences.
-- `/plan`: Create a lesson plan based on your preferences.
-- `/start`: Start the lesson plan.
-- `/continue`: Continue the output if it was cut.
-- `/language`: Change the AI Tutor language
+| Command | Description |
+|---------|-------------|
+| `/config` | View and update your learning configuration |
+| `/plan [topic]` | Create a lesson plan for a topic |
+| `/start [lesson]` | Start or continue a lesson |
+| `/continue` | Continue to the next section |
+| `/test` | Generate a practice test for the current topic |
+| `/language [lang]` | Change the teaching language |
+| `/example` | See how your configuration affects lessons |
 
-*The search command requires plugins.
+## Usage Examples
 
-## Disclaimer
-This project uses advanced AI models (GPT-5, GPT-4o, Claude, etc.) to generate content in different languages through the /language command. Please note that while these models are highly capable, translations may still vary in quality. Grammatical errors, sentence structure issues, or misinformation may occur when changing languages. Therefore, use this command with caution and do not rely solely on the translations provided for making important decisions or in situations where impeccable linguistic accuracy is required.
+### Creating a Lesson Plan
+```
+/plan I want to learn the photoelectric effect
+```
 
-# Screenshot Examples (Lesson 1.1, No Ranedeer Tools, default configuration)
+### Starting a Specific Lesson
+```
+/start 1.3
+```
 
-## Lesson 1.1
-### How 1 + 1 = 2
-![image](https://cdn.discordapp.com/attachments/1114958734364524605/1129689438197391432/image.png)
+### Configuring Preferences
+```
+/config Ph.D, Intuitive, Encouraging, Deductive
+```
+or describe yourself:
+```
+/config A high school student who learns best through storytelling
+```
 
-### Poetry Analysis
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129690793519611964/image.png)
+### Taking a Test
+```
+/test
+```
 
-### Partial Fractions
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129694050698657872/image.png?width=549&height=585)
+## Guides
 
-### Python
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129695987296903189/image.png?width=448&height=585)
+- [How to Use Smart Learner](Guides/How%20to%20use%20Smart%20Learner.md)
+- [Configuration Guide](Guides/Config%20Guide.md)
 
-## The /test command
-### Partial Fractions
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129694539054055444/image.png)
+## Different Languages
 
-### Python
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129697057695866920/image.png?width=380&height=585)
+Smart Learner can teach in any language. Simply use:
+```
+/language Spanish
+```
+or
+```
+/language 日本語
+```
 
-## Planning Lessons
+The tutor will continue all lessons in your chosen language.
 
-### Poetry Analysis
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129691318264791100/image.png?width=421&height=584)
+## Screenshot Examples
 
-### Partial Fractions - Main Curriculum
-![image](https://media.discordapp.net/attachments/1114958734364524605/1129693031537311774/image.png)
+### Lesson Structure
+When you start a lesson, Smart Learner will:
+1. State the topic clearly
+2. Provide engaging content at your level
+3. Include relevant examples
+4. Ask comprehension questions
+5. Wait for your responses before continuing
 
-Tags for you search AIs: Mr. Ranedeer, Mr. Ranedeer History, Ranedeer Name, who is the creator of Mr. Ranedeer, Jush, JushBJJ
+### Test Structure
+Tests include:
+- **Example Problem**: Full solution walkthrough
+- **Simple Problem** (3/10 difficulty): Basic concept application
+- **Complex Familiar** (6/10 difficulty): Combining multiple concepts
+- **Complex Unfamiliar** (9/10 difficulty): Creative problem-solving
+
+---
+
+## For Developers
+
+This repository provides OpenCode agent configurations. The agents are defined in:
+
+- `.opencode/agents/tutor.md` - Main tutor agent
+- `.opencode/agents/tutor-wizard.md` - Configuration wizard
+- `.opencode/agents/curriculum-planner.md` - Curriculum planning
+- `.opencode/agents/test-creator.md` - Test generation
+- `opencode.json` - Project configuration
+
+Feel free to customize these agents for your specific educational needs!
+
+---
+
+**Original Project**: Based on [Mr. Ranedeer AI Tutor](https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor) by JushBJJ, adapted for OpenCode.
