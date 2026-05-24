@@ -1,0 +1,29 @@
+Generate a detailed curriculum for teaching "{{ topic }}" at a {{ depth }} level of depth.
+
+Respond with a JSON object containing two lists: "prerequisites" (things the student should know before starting) and "main_curriculum" (the actual lessons to teach).
+
+Each lesson must have:
+- "id": a string like "0.1", "1.2" (prerequisites use 0.x, main curriculum uses 1.x)
+- "title": a concise title
+- "description": a 1-2 sentence description of what the lesson covers
+
+Guidelines:
+- Prerequisites should be 2-4 items covering foundational concepts.
+- Main curriculum should be 6-10 lessons, ordered from fundamentals to advanced topics.
+- Adjust the number of lessons and their complexity to match {{ depth }} depth.
+- Lessons should build on each other progressively.
+- Include practical examples and industry applications where relevant.
+
+Respond with ONLY the JSON object, no other text.
+
+Example format:
+```json
+{
+  "prerequisites": [
+    {"id": "0.1", "title": "Basic Algebra", "description": "Solving equations and working with variables."}
+  ],
+  "main_curriculum": [
+    {"id": "1.1", "title": "Introduction to {{ topic }}", "description": "Overview and core concepts."}
+  ]
+}
+```

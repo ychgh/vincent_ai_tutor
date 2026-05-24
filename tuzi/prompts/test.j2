@@ -1,0 +1,35 @@
+Generate a test for the topic: {{ topic }}
+
+Create 3 questions at increasing difficulty levels:
+
+1. **Simple Familiar (difficulty: 3/10)** — Tests basic recall of a core concept from the lessons.
+2. **Complex Familiar (difficulty: 6/10)** — Tests understanding by applying a concept in a familiar context.
+3. **Complex Unfamiliar (difficulty: 9/10)** — Tests deeper understanding by applying concepts to a new, unfamiliar scenario.
+
+Respond with a JSON array of questions. Each question must have:
+- "id": number (1, 2, 3)
+- "difficulty": one of "simple familiar", "complex familiar", "complex unfamiliar"
+- "question": the full question text (include any code or context needed)
+
+Example format:
+```json
+[
+  {
+    "id": 1,
+    "difficulty": "simple familiar",
+    "question": "What is the primary purpose of a Python decorator? Explain in 1-2 sentences."
+  },
+  {
+    "id": 2,
+    "difficulty": "complex familiar",
+    "question": "Write a decorator that logs the execution time of a function. Show the code and explain each part."
+  },
+  {
+    "id": 3,
+    "difficulty": "complex unfamiliar",
+    "question": "Design a decorator-based access control system for a web API. How would you use decorators to enforce role-based permissions? Explain with code examples."
+  }
+]
+```
+
+Respond with ONLY the JSON array, no other text.

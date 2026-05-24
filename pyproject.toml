@@ -1,0 +1,27 @@
+[project]
+name = "tuzi"
+version = "0.1.0"
+description = "Mr. Ranedeer AI Tutor - a personalized CLI tutoring bot"
+requires-python = ">=3.9"
+dependencies = [
+    "litellm>=1.40.0",
+    "rich>=13.0.0",
+    "jinja2>=3.1.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "click>=8.0.0",
+]
+
+[project.optional-dependencies]
+gradio = ["gradio>=4.0.0"]
+dev = ["pytest>=8.0.0", "pytest-asyncio>=0.23.0"]
+
+[project.scripts]
+tuzi = "tuzi.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["tuzi", "tuzi.*"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
