@@ -1,0 +1,25 @@
+Evaluate the student's answers to the test questions below. For each question, provide:
+
+1. The correct answer (or a model answer for open-ended questions)
+2. Constructive feedback on the student's answer — what was good, what was missing, and how to improve
+
+Respond with a JSON array of evaluations. Each evaluation must have:
+- "id": matching the question number
+- "correct_answer": the model/correct answer
+- "feedback": constructive feedback on the student's answer
+
+Questions and student answers:
+{{ questions_and_answers }}
+
+Example format:
+```json
+[
+  {
+    "id": 1,
+    "correct_answer": "A Python decorator is a function that wraps another function to extend its behavior without modifying its source code.",
+    "feedback": "Good understanding of the core concept! You might also mention that decorators use the @syntax and are implemented using closures."
+  }
+]
+```
+
+Respond with ONLY the JSON array, no other text.
