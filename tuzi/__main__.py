@@ -18,7 +18,7 @@ def main():
     db = Database(config.db_path)
     llm = LLMClient()
     renderer = Renderer()
-    session_mgr = SessionManager(db, llm)
+    session_mgr = SessionManager(db, llm, renderer)
 
     repl = TutorREPL(session_mgr, renderer, db)
     repl.run()

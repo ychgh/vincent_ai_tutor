@@ -39,7 +39,9 @@ class TutorREPL:
                     self.renderer.show_help(self.session_mgr.state)
                     continue
 
-                if result.content:
+                if result.curriculum:
+                    self.renderer.display_curriculum(result.curriculum)
+                elif result.content:
                     self.renderer.display_markdown(result.content)
 
             except KeyboardInterrupt:

@@ -5,6 +5,7 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
+from .cli.stream import stream_markdown
 from .cli.wizard import run_wizard
 from .database import Database
 from .llm import LLMClient, LLMError
@@ -28,14 +29,16 @@ class CommandResult:
     content: str
     state: SessionState
     is_error: bool = False
+    curriculum: Optional[Curriculum] = None
 
 
 class SessionManager:
     """Manages tutor state, command routing, and LLM orchestration."""
 
-    def __init__(self, db: Database, llm: LLMClient):
+    def __init__(self, db: Database, llm: LLMClient, renderer=None):
         self.db = db
         self.llm = llm
+        self.renderer = renderer
         self.session = Session()
         self._profile: Optional[UserProfile] = None
         self._curriculum: Optional[Curriculum] = None
@@ -163,13 +166,23 @@ class SessionManager:
                 depth=self._profile.depth.value,
             )
 
-            response = self.llm.chat(
-                [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": curriculum_prompt},
-                ],
-                max_tokens=4000,
-            )
+            if self.renderer is not None:
+                chunks = self.llm.chat_stream(
+                    [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": curriculum_prompt},
+                    ],
+                    max_tokens=4000,
+                )
+                response = stream_markdown(chunks)
+            else:
+                response = self.llm.chat(
+                    [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": curriculum_prompt},
+                    ],
+                    max_tokens=4000,
+                )
 
             curriculum = self._parse_curriculum_response(response, topic)
             curriculum = self.db.save_curriculum(curriculum)
@@ -180,6 +193,7 @@ class SessionManager:
             return CommandResult(
                 content=self._format_curriculum_display(curriculum),
                 state=SessionState.CURATED,
+                curriculum=curriculum,
             )
         except LLMError as e:
             self.session.state = SessionState.READY
@@ -258,13 +272,26 @@ class SessionManager:
                 Message(role="system", content=system_prompt)
             ]
 
-            response = self.llm.chat(
-                [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": lesson_prompt},
-                ],
-                max_tokens=4000,
-            )
+            if self.renderer is not None:
+                chunks = self.llm.chat_stream(
+                    [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": lesson_prompt},
+                    ],
+                    max_tokens=4000,
+                )
+                response = stream_markdown(chunks)
+                self.renderer.print(
+                    "\n[dim]─── Type /continue for more, or ask a question ───[/dim]"
+                )
+            else:
+                response = self.llm.chat(
+                    [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": lesson_prompt},
+                    ],
+                    max_tokens=4000,
+                )
 
             self.session.conversation_history.append(
                 Message(role="user", content=lesson_prompt)
@@ -273,6 +300,11 @@ class SessionManager:
                 Message(role="assistant", content=response)
             )
 
+            if self.renderer is not None:
+                return CommandResult(
+                    content="",
+                    state=SessionState.LESSON,
+                )
             return CommandResult(
                 content=response + "\n\n[dim]─── Type /continue for more, or ask a question ───[/dim]",
                 state=SessionState.LESSON,
