@@ -21,12 +21,16 @@ vincent_ai_tutor/
 │   │   ├── test.j2                # Test question generation
 │   │   ├── test_evaluate.j2       # Test answer evaluation
 │   │   └── wizard.j2              # LLM-powered config wizard (opt-in)
-│   └── cli/
+│   ├── cli/
+│   │   ├── __init__.py
+│   │   ├── repl.py                # REPL loop
+│   │   ├── renderer.py            # Rich output components
+│   │   ├── stream.py              # Streaming LLM display
+│   │   └── wizard.py              # Native config wizard
+│   └── gradio_ui/
 │       ├── __init__.py
-│       ├── repl.py                # REPL loop
-│       ├── renderer.py            # Rich output components
-│       ├── stream.py              # Streaming LLM display
-│       └── wizard.py              # Native config wizard
+│       ├── app.py                 # Gradio layout (4 tabs)
+│       └── callbacks.py           # Streaming + sync event handlers
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py                # Pytest fixtures (db, sample_profile)
@@ -43,15 +47,14 @@ vincent_ai_tutor/
 
 ### `tuzi/__main__.py` — Entry Point
 
-The `main()` function wires all dependencies and starts the REPL:
+The `main()` function is a Click command with a `--ui [cli|gradio]` option (default: `cli`). It wires all dependencies and starts the selected interface:
 
 1. Loads `.env` via `python-dotenv`
 2. Creates `AppConfig` from environment (db path, model name)
 3. Initializes `Database` (creates tables if needed)
 4. Initializes `LLMClient` (reads `LLM_MODEL` env var)
-5. Initializes `Renderer` (Rich console wrapper)
-6. Creates `SessionManager` (state machine, restores profile from DB)
-7. Creates and runs `TutorREPL`
+5. **CLI mode**: Initializes `Renderer`, creates `SessionManager(db, llm, renderer)`, runs `TutorREPL`
+6. **Gradio mode**: Creates `SessionManager(db, llm)` (no renderer — streaming handled by Gradio callbacks), calls `run_gradio()`
 
 ### `tuzi/models.py` — Data Models
 
@@ -112,11 +115,13 @@ The `main()` function wires all dependencies and starts the REPL:
 
 ### `tuzi/session.py` — State Machine and Command Routing
 
-637 lines. The central module that orchestrates all tutor behavior.
+~500 lines. The central module that orchestrates all tutor behavior.
 
 **`SessionManager`** fields:
 - `db: Database` — Persistence
 - `llm: LLMClient` — Content generation
+- `renderer: Optional[Renderer]` — Rich renderer (CLI only; None in Gradio mode)
+- `_lock: threading.Lock` — Ensures thread-safe state mutation
 - `session: Session` — Current state + metadata
 - `_profile: Optional[UserProfile]` — Loaded from DB on startup
 - `_curriculum: Optional[Curriculum]` — Active curriculum
@@ -124,11 +129,24 @@ The `main()` function wires all dependencies and starts the REPL:
 - `_test_index: int` — Current question index
 
 **Command Routing**:
-`handle_command(raw: str)` dispatches based on:
+`handle_command(raw: str)` acquires the lock, then dispatches based on:
 1. Starts with `/` → `_dispatch(cmd, args)` → handler lookup in dict
 2. State is `LESSON` → `_handle_question(raw)`
 3. State is `TEST` → `_handle_test_answer(raw)`
 4. Otherwise → "Type /help to see available commands"
+
+**Streaming Support — Prepare/Finalize Pattern**:
+To support streaming UIs (CLI Rich Live and Gradio generators), LLM-dependent commands are split into two phases:
+
+- `prepare_plan(args)` → `(success, error, system_prompt, curriculum_prompt)` — Validates state, sets PLANNING, builds prompts. Does not call LLM.
+- `finalize_plan(response, topic)` → `Optional[Curriculum]` — Parses JSON from the accumulated stream, saves to DB, sets CURATED.
+- `prepare_start_lesson(args)` → `(success, error, system_prompt, lesson_prompt)` — Validates state, finds lesson, sets LESSON, clears history, builds prompts.
+- `finalize_start_lesson(lesson_prompt, response)` — Appends user and assistant messages to conversation history.
+
+`_handle_plan` and `_handle_start` use these internally. The Gradio UI calls them directly so it can drive the streaming loop between prepare and finalize.
+
+**Thread Safety**:
+All public methods that mutate state (`handle_command`, `prepare_*`, `finalize_*`) acquire `self._lock` before delegating to `_*_locked` internal methods.
 
 **LLM Response Parsers** (3 methods):
 
@@ -203,6 +221,32 @@ The `main()` function wires all dependencies and starts the REPL:
 
 Uses `_menu_select()` helper that shows numbered options, marks the default, and validates input is within range. Uses `_find_index()` to pre-select the current value when reconfiguring.
 
+### `tuzi/gradio_ui/` — Gradio Web UI
+
+Two files providing an alternative web-based interface.
+
+**`gradio_ui/app.py`** — `run_gradio(session_mgr, db, llm)` builds the `gr.Blocks` layout:
+
+- **Chat tab**: `gr.Chatbot` + `gr.Textbox` + Send/Clear buttons + state indicator
+- **Curriculum tab**: `gr.HTML` showing the active curriculum as a styled HTML table
+- **Settings tab**: Form with dropdowns for all 7 `UserProfile` dimensions + Save button
+- **Status tab**: `gr.HTML` showing profile, state, topic, and progress + Refresh button
+- `demo.queue(default_concurrency_limit=1)` ensures serial callback execution
+- Launches on `http://127.0.0.1:7860`
+
+**`gradio_ui/callbacks.py`** — Event handler classes:
+
+`ChatCallbacks`:
+- `handle_message(message, history, ui_state)` — Generator-based callback. Routes to streaming handlers for `/plan` and `/start`, sync handler for all other commands.
+- `_handle_start_streaming()` — Calls `session_mgr.prepare_start_lesson()`, loops over `llm.chat_stream()`, yields `(chatbot, curriculum_html, status, ui_state)` on each token, then calls `session_mgr.finalize_start_lesson()`.
+- `_handle_plan_streaming()` — Calls `session_mgr.prepare_plan()`, streams tokens, calls `session_mgr.finalize_plan()`, updates curriculum HTML.
+- `_handle_sync()` — Calls `session_mgr.handle_command()` for `/continue`, `/test`, `/status`, free-text questions. Strips Rich markup from displayed text.
+- `/config` redirects to the Settings tab. `/help` displays a markdown command reference. `/exit` ends the session.
+
+`SettingsCallbacks`:
+- `save_profile()` — Builds `UserProfile` from form values, saves via `db.save_profile()`, updates `session_mgr` state.
+- `load_profile()` — Returns current profile values to populate the form on startup.
+
 ### `tuzi/prompts/` — Jinja2 Templates
 
 7 templates total.
@@ -236,4 +280,4 @@ Uses `_menu_select()` helper that shows numbered options, marks the default, and
 | `python-dotenv` | ≥1.0.0 | Loading `.env` file for API keys |
 | `click` | ≥8.0.0 | CLI entry point framework |
 | `pytest` (dev) | ≥8.0.0 | Test framework |
-| `gradio` (optional) | ≥4.0.0 | Web UI (Phase 2) |
+| `gradio` (optional) | ≥4.0.0 | Web UI (use `tuzi --ui gradio`) |

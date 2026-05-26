@@ -41,6 +41,15 @@ DEEPSEEK_API_KEY=sk-...
 
 ## Quick Start
 
+Tuzi supports two interfaces. Use the `--ui` flag to choose:
+
+```bash
+tuzi --ui cli      # CLI mode (default)
+tuzi --ui gradio   # Web UI at http://127.0.0.1:7860
+```
+
+### CLI Mode
+
 ```bash
 tuzi
 ```
@@ -72,13 +81,39 @@ The wizard walks you through 8 steps:
 
 You can reconfigure at any time by running `/config` again.
 
+### Gradio Web UI
+
+Launch the web interface:
+
+```bash
+tuzi --ui gradio
+```
+
+This opens a browser at `http://127.0.0.1:7860` with four tabs:
+
+- **Chat** — The main interface. Type commands (`/plan`, `/start`, etc.) and questions just like the CLI. LLM responses for `/plan` and `/start` stream token-by-token.
+- **Curriculum** — Shows the active study plan as a formatted table with lesson IDs, titles, descriptions, and status.
+- **Settings** — Configure your learning profile via dropdown menus instead of the terminal wizard.
+- **Status** — View your current profile, session state, topic, and lesson progress.
+
+To install with Gradio support:
+
+```bash
+pip install -e ".[gradio]"
+```
+
 ## Commands
+
+Commands work the same in both CLI and Gradio. In Gradio, type them in the Chat tab's text input.
+
+### `/help`
+Show available commands and the current state.
 
 ### `/help`
 Show available commands and the current state.
 
 ### `/plan <topic>`
-Generate a detailed study plan for a topic. The tutor creates:
+Generate a detailed study plan for a topic. The response streams token-by-token so you can see progress immediately. The tutor creates:
 - **Prerequisites** (2-4 lessons): Foundational concepts you should know first
 - **Main Curriculum** (6-10 lessons): Progressive lessons from fundamentals to advanced
 
@@ -87,10 +122,10 @@ Example:
 tuzi > /plan python decorators
 ```
 
-The plan is displayed as a table and saved for future sessions.
+The plan is displayed as a formatted table (CLI: Rich table, Gradio: HTML table in the Curriculum tab) and saved for future sessions.
 
 ### `/start [lesson_id]`
-Begin a lesson. You can specify a lesson ID or omit it to start the first pending lesson.
+Begin a lesson. The response streams token-by-token so you can start reading immediately instead of waiting for the full response. You can specify a lesson ID or omit it to start the first pending lesson.
 
 ```
 tuzi [python decorators] > /start 1.1

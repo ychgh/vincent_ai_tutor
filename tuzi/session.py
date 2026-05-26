@@ -2,6 +2,7 @@
 
 import json
 import re
+import threading
 from dataclasses import dataclass
 from typing import Optional
 
@@ -39,6 +40,7 @@ class SessionManager:
         self.db = db
         self.llm = llm
         self.renderer = renderer
+        self._lock = threading.Lock()
         self.session = Session()
         self._profile: Optional[UserProfile] = None
         self._curriculum: Optional[Curriculum] = None
@@ -51,6 +53,142 @@ class SessionManager:
         self._profile = self.db.get_profile()
         if self._profile:
             self.session.state = SessionState.READY
+
+    # ---- Public helpers for streaming UIs ----
+
+    def prepare_start_lesson(self, args: str) -> tuple:
+        """Validate and prepare a /start command without calling the LLM.
+
+        Returns (success, error_or_empty, system_prompt_or_none, lesson_prompt_or_none).
+        On success: sets session state to LESSON, clears conversation history,
+        marks lesson in_progress, and returns the constructed prompts.
+        """
+        with self._lock:
+            return self._prepare_start_lesson_locked(args)
+
+    def _prepare_start_lesson_locked(self, args: str) -> tuple:
+        if self.session.state != SessionState.CURATED:
+            return (False, "No curriculum available. Run /plan <topic> first.", None, None)
+
+        if not self._curriculum:
+            return (False, "No active curriculum. Run /plan <topic> first.", None, None)
+
+        lesson_id = args.strip() if args else None
+        if not lesson_id:
+            all_lessons = self._curriculum.prerequisites + self._curriculum.main_curriculum
+            for lesson in all_lessons:
+                if lesson.status == "pending":
+                    lesson_id = lesson.id
+                    break
+            if not lesson_id:
+                return (False, "All lessons completed! Try /plan for a new topic or /test to review.", None, None)
+
+        lesson = self._find_lesson(lesson_id)
+        if lesson is None:
+            return (False, f"Lesson {lesson_id} not found in the current curriculum.", None, None)
+
+        self.session.state = SessionState.LESSON
+        self.session.current_lesson_id = lesson_id
+        self.session.active_curriculum_id = self._curriculum.id
+        self.db.update_lesson_status(self._curriculum.id, lesson_id, "in_progress")
+
+        system_prompt = render(
+            "system.j2",
+            depth=self._profile.depth.value,
+            learning_style=self._profile.learning_style.value,
+            communication_style=self._profile.communication_style.value,
+            tone_style=self._profile.tone_style.value,
+            reasoning_framework=self._profile.reasoning_framework.value,
+            emojis_enabled=self._profile.emojis_enabled,
+            language=self._profile.language,
+        )
+
+        lesson_prompt = render(
+            "lesson.j2",
+            topic=self._curriculum.topic,
+            lesson_title=lesson.title,
+            lesson_description=lesson.description,
+            lesson_id=lesson_id,
+        )
+
+        self.session.conversation_history = [
+            Message(role="system", content=system_prompt)
+        ]
+
+        return (True, "", system_prompt, lesson_prompt)
+
+    def finalize_start_lesson(self, lesson_prompt: str, response: str) -> None:
+        """Update conversation history after a lesson has been streamed."""
+        with self._lock:
+            self.session.conversation_history.append(
+                Message(role="user", content=lesson_prompt)
+            )
+            self.session.conversation_history.append(
+                Message(role="assistant", content=response)
+            )
+
+    def prepare_plan(self, args: str) -> tuple:
+        """Validate and prepare a /plan command without calling the LLM.
+
+        Returns (success, error_or_empty, system_prompt_or_none, curriculum_prompt_or_none).
+        On success: sets session state to PLANNING and returns prompts.
+        """
+        with self._lock:
+            return self._prepare_plan_locked(args)
+
+    def _prepare_plan_locked(self, args: str) -> tuple:
+        if not args:
+            return (False, "Usage: /plan <topic> — e.g., /plan quantum mechanics", None, None)
+
+        if self.session.state not in (SessionState.READY, SessionState.CURATED):
+            return (False, f"Cannot plan in state: {self.session.state.value}. Run /config first.", None, None)
+
+        if not self._profile:
+            return (False, "No profile found. Run /config first.", None, None)
+
+        self.session.state = SessionState.PLANNING
+        topic = args.strip()
+        self.session.current_topic = topic
+
+        system_prompt = render(
+            "system.j2",
+            depth=self._profile.depth.value,
+            learning_style=self._profile.learning_style.value,
+            communication_style=self._profile.communication_style.value,
+            tone_style=self._profile.tone_style.value,
+            reasoning_framework=self._profile.reasoning_framework.value,
+            emojis_enabled=self._profile.emojis_enabled,
+            language=self._profile.language,
+        )
+
+        curriculum_prompt = render(
+            "curriculum.j2",
+            topic=topic,
+            depth=self._profile.depth.value,
+        )
+
+        return (True, "", system_prompt, curriculum_prompt)
+
+    def finalize_plan(self, response: str, topic: str):
+        """Parse curriculum from LLM response, save to DB, update state.
+
+        Returns the Curriculum object, or None on failure.
+        Sets session state to CURATED on success, READY on failure.
+        """
+        with self._lock:
+            return self._finalize_plan_locked(response, topic)
+
+    def _finalize_plan_locked(self, response: str, topic: str):
+        try:
+            curriculum = self._parse_curriculum_response(response, topic)
+            curriculum = self.db.save_curriculum(curriculum)
+            self._curriculum = curriculum
+            self.session.active_curriculum_id = curriculum.id
+            self.session.state = SessionState.CURATED
+            return curriculum
+        except Exception:
+            self.session.state = SessionState.READY
+            return None
 
     @property
     def profile(self) -> Optional[UserProfile]:
@@ -68,6 +206,10 @@ class SessionManager:
 
     def handle_command(self, raw: str) -> CommandResult:
         """Route a command or free-text input to the appropriate handler."""
+        with self._lock:
+            return self._handle_command_locked(raw)
+
+    def _handle_command_locked(self, raw: str) -> CommandResult:
         raw = raw.strip()
 
         if raw.startswith("/"):
@@ -123,49 +265,13 @@ class SessionManager:
         )
 
     def _handle_plan(self, args: str) -> CommandResult:
-        if not args:
-            return CommandResult(
-                "Usage: /plan <topic> — e.g., /plan quantum mechanics",
-                self.session.state,
-                is_error=True,
-            )
+        success, error, system_prompt, curriculum_prompt = self._prepare_plan_locked(args)
+        if not success:
+            return CommandResult(error, self.session.state, is_error=True)
 
-        if self.session.state not in (SessionState.READY, SessionState.CURATED):
-            return CommandResult(
-                f"Cannot plan in state: {self.session.state.value}. Run /config first.",
-                self.session.state,
-                is_error=True,
-            )
-
-        if not self._profile:
-            return CommandResult(
-                "No profile found. Run /config first.",
-                self.session.state,
-                is_error=True,
-            )
-
-        self.session.state = SessionState.PLANNING
-        topic = args.strip()
-        self.session.current_topic = topic
+        topic = self.session.current_topic
 
         try:
-            system_prompt = render(
-                "system.j2",
-                depth=self._profile.depth.value,
-                learning_style=self._profile.learning_style.value,
-                communication_style=self._profile.communication_style.value,
-                tone_style=self._profile.tone_style.value,
-                reasoning_framework=self._profile.reasoning_framework.value,
-                emojis_enabled=self._profile.emojis_enabled,
-                language=self._profile.language,
-            )
-
-            curriculum_prompt = render(
-                "curriculum.j2",
-                topic=topic,
-                depth=self._profile.depth.value,
-            )
-
             if self.renderer is not None:
                 chunks = self.llm.chat_stream(
                     [
@@ -184,11 +290,13 @@ class SessionManager:
                     max_tokens=4000,
                 )
 
-            curriculum = self._parse_curriculum_response(response, topic)
-            curriculum = self.db.save_curriculum(curriculum)
-            self._curriculum = curriculum
-            self.session.active_curriculum_id = curriculum.id
-            self.session.state = SessionState.CURATED
+            curriculum = self._finalize_plan_locked(response, topic)
+            if curriculum is None:
+                return CommandResult(
+                    "Failed to parse curriculum. Please try again.",
+                    self.session.state,
+                    is_error=True,
+                )
 
             return CommandResult(
                 content=self._format_curriculum_display(curriculum),
@@ -205,73 +313,11 @@ class SessionManager:
             )
 
     def _handle_start(self, args: str) -> CommandResult:
-        if self.session.state != SessionState.CURATED:
-            return CommandResult(
-                "No curriculum available. Run /plan <topic> first.",
-                self.session.state,
-                is_error=True,
-            )
-
-        if not self._curriculum:
-            return CommandResult(
-                "No active curriculum. Run /plan <topic> first.",
-                self.session.state,
-                is_error=True,
-            )
-
-        lesson_id = args.strip() if args else None
-        if not lesson_id:
-            # Auto-pick first pending lesson
-            all_lessons = self._curriculum.prerequisites + self._curriculum.main_curriculum
-            for lesson in all_lessons:
-                if lesson.status == "pending":
-                    lesson_id = lesson.id
-                    break
-            if not lesson_id:
-                return CommandResult(
-                    "All lessons completed! Try /plan for a new topic or /test to review.",
-                    self.session.state,
-                    is_error=True,
-                )
-
-        lesson = self._find_lesson(lesson_id)
-        if lesson is None:
-            return CommandResult(
-                f"Lesson {lesson_id} not found in the current curriculum.",
-                self.session.state,
-                is_error=True,
-            )
-
-        self.session.state = SessionState.LESSON
-        self.session.current_lesson_id = lesson_id
-        self.session.active_curriculum_id = self._curriculum.id
-        self.db.update_lesson_status(self._curriculum.id, lesson_id, "in_progress")
+        success, error, system_prompt, lesson_prompt = self._prepare_start_lesson_locked(args)
+        if not success:
+            return CommandResult(error, self.session.state, is_error=True)
 
         try:
-            system_prompt = render(
-                "system.j2",
-                depth=self._profile.depth.value,
-                learning_style=self._profile.learning_style.value,
-                communication_style=self._profile.communication_style.value,
-                tone_style=self._profile.tone_style.value,
-                reasoning_framework=self._profile.reasoning_framework.value,
-                emojis_enabled=self._profile.emojis_enabled,
-                language=self._profile.language,
-            )
-
-            lesson_prompt = render(
-                "lesson.j2",
-                topic=self._curriculum.topic,
-                lesson_title=lesson.title,
-                lesson_description=lesson.description,
-                lesson_id=lesson_id,
-            )
-
-            # Clear conversation history for new lesson
-            self.session.conversation_history = [
-                Message(role="system", content=system_prompt)
-            ]
-
             if self.renderer is not None:
                 chunks = self.llm.chat_stream(
                     [

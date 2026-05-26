@@ -67,6 +67,43 @@ The tutor's behavior is governed by a 7-state finite state machine. Each state d
 - During `TEST`, non-command input is treated as an answer to the current question
 - `/exit` sends a sentinel (`__EXIT__`) that the REPL loop handles
 
+## Dual UI Design
+
+Tuzi supports two interfaces behind a `--ui` switch. Both share the same `SessionManager`, `LLMClient`, `Database`, and prompt templates.
+
+### CLI (default)
+- Built with Rich for terminal formatting
+- `Renderer` handles all display concerns (tables, markdown, panels)
+- `stream_markdown()` uses Rich's `Live` for token-by-token display
+- Config wizard uses native Python `Prompt.ask()` with numbered menus
+
+### Gradio Web UI (`--ui gradio`)
+- Built with Gradio Blocks: 4 tabs (Chat, Curriculum, Settings, Status)
+- `SessionManager` is constructed **without** a `Renderer` — streaming and display are handled entirely by Gradio callbacks
+- Generator-based callbacks: the handler is a Python generator that yields `(chatbot, curriculum_html, status, state)` tuples on each LLM token
+- Settings tab replaces the terminal wizard with a dropdown-based form
+- `gr.State` holds transient UI state (`session_state`, `topic`, `curriculum_id`)
+- Rich markup is stripped from all displayed text (HTML doesn't understand `[bold]`, `[dim]`, etc.)
+- `demo.queue(default_concurrency_limit=1)` ensures serial callback execution
+
+### Prepare/Finalize Pattern
+To avoid duplicating validation and prompt-construction logic across UIs, `SessionManager` exposes paired public methods:
+
+| Phase | `/plan` | `/start` |
+|---|---|---|
+| Prepare | `prepare_plan(args)` — validates state, sets PLANNING, builds system + curriculum prompts | `prepare_start_lesson(args)` — validates state, finds lesson, sets LESSON, clears history, builds prompts |
+| Finalize | `finalize_plan(response, topic)` — parses JSON, saves to DB, sets CURATED, returns Curriculum | `finalize_start_lesson(prompt, response)` — appends to conversation history |
+
+The UI layer calls `prepare_*`, streams LLM tokens, then calls `finalize_*`. The CLI uses these via `_handle_plan`/`_handle_start`; Gradio calls them directly.
+
+## Streaming Design
+
+`/plan` and `/start` stream LLM responses token-by-token rather than waiting for completion:
+
+- **CLI**: `LLMClient.chat_stream()` yields chunks → `stream_markdown()` renders them via `rich.live.Live` with `Markdown` updates at 10 FPS
+- **Gradio**: The callback is a generator. Each iteration appends the new chunk to the accumulated response and yields updated outputs. Gradio's framework polls the generator and updates the `gr.Chatbot` in real time
+- **Other commands** (`/continue`, `/test`, questions): Use synchronous `LLMClient.chat()` since responses are shorter and parsing (JSON) is needed immediately
+
 ## Configuration Dimensions
 
 Inherited from the original Mr. Ranedeer prompt system, the tutor supports 6 configurable dimensions:
@@ -139,12 +176,15 @@ Every command handler returns a `CommandResult` dataclass:
 ```python
 @dataclass
 class CommandResult:
-    content: str          # Display content (or sentinel)
-    state: SessionState   # New state after command
-    is_error: bool        # Whether this is an error result
+    content: str                        # Display content (or sentinel)
+    state: SessionState                 # New state after command
+    is_error: bool = False              # Whether this is an error result
+    curriculum: Optional[Curriculum] = None  # Populated by /plan for structured display
 ```
 
-Sentinels (`__EXIT__`, `__HELP__`) are special content strings the REPL loop intercepts before display. This avoids coupling the session layer to the I/O layer.
+The `curriculum` field lets UIs detect curriculum results and use a structured renderer (Rich `Table` in CLI, HTML table in Gradio) instead of treating the output as plain markdown.
+
+Sentinels (`__EXIT__`, `__HELP__`) are special content strings the UI layer intercepts before display. This avoids coupling the session layer to the I/O layer.
 
 ### Error Handling Strategy
 
