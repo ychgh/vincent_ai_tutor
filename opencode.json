@@ -1,0 +1,55 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "tutor": {
+      "description": "Smart Learner - Your personalized AI tutor for any subject",
+      "mode": "primary",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.4,
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "webfetch": "allow",
+        "websearch": "allow"
+      }
+    },
+    "tutor-wizard": {
+      "description": "Configuration Wizard - Helps discover your ideal learning preferences",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.5,
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    },
+    "curriculum-planner": {
+      "description": "Curriculum Planner - Creates comprehensive lesson plans for any topic",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "webfetch": "allow",
+        "websearch": "allow"
+      }
+    },
+    "test-creator": {
+      "description": "Test Creator - Generates practice tests with varying difficulty",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.4,
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    },
+    "build": {
+      "disable": true
+    },
+    "plan": {
+      "disable": true
+    }
+  }
+}

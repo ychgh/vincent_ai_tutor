@@ -1,183 +1,106 @@
-<<<<<<< HEAD
 # Configuration Guide
 
-**Note:** Mr. Ranedeer v3.0 is optimized for GPT-5 and advanced AI models, offering enhanced reasoning, multi-modal understanding, and improved code execution capabilities.
+**Note:** Smart Learner works with OpenCode and any modern AI model (Claude, GPT-5, etc.).
 
 **Table of Contents**
 
 - [Configuration Guide](#configuration-guide)
-  - [ChatGPT Version](#chatgpt-version)
-    - [**Method 1** - Inside ChatGPT Website **(Recommended)**](#method-1---inside-chatgpt-website-recommended)
-    - [**Method 2** - Copy and Pasting the Prompt](#method-2---copy-and-pasting-the-prompt)
-    - [**Method 3** - `/config` command](#method-3---config-command)
-- [Types of Configuations](#types-of-configuations)
+  - [OpenCode Version](#opencode-version)
+    - [**Method 1** - Using the Configuration Wizard **(Recommended)**](#method-1---using-the-configuration-wizard-recommended)
+    - [**Method 2** - Using the `/config` command](#method-2---using-the-config-command)
+    - [**Method 3** - Describing yourself](#method-3---describing-yourself)
+- [Types of Configurations](#types-of-configurations)
   - [Depth](#depth)
-  - [Learning style](#learning-style)
+  - [Learning Style](#learning-style)
   - [Communication Style](#communication-style)
   - [Tone Style](#tone-style)
   - [Reasoning Framework](#reasoning-framework)
 
-## ChatGPT Version
+## OpenCode Version
 
+### **Method 1** - Using the Configuration Wizard **(Recommended)**
 
-### **Method 1** - Inside ChatGPT Website **(Recommended)**
+1. Start OpenCode in the repository directory
+2. Invoke the configuration wizard:
+   ```
+   @tutor-wizard help me find my ideal learning configuration
+   ```
+3. Answer the wizard's questions about your preferences
+4. The wizard will provide your ideal configuration
 
-1. In ChatGPT, scroll up to the top of the chat and click the edit button
-2. In the `[student configuration]` heading, change the configuration to whatever you prefer
-3. Scroll down and press the `Save & Submit` button.
+### **Method 2** - Using the `/config` command
 
-### **Method 2** - Copy and Pasting the Prompt
-
-1. Find the `[student configuration]` heading and change the configuration to whatever you prefer
-
-    ![Image](https://media.discordapp.net/attachments/1114958734364524605/1118351780556845116/image.png)
-
-2. Copy and paste the Mr. Ranedeer prompt you changed into ChatGPT then press `Save & Continue`
-
-### **Method 3** - `/config` command
-
-There are many ways to use this command. However, it is recommended to use `/config` command by describing every preferences you want.
+Use the `/config` command by specifying your preferences directly.
 
 **Examples**
 
 1. `/config Ph.D, Intuitive, Encouraging, Deductive`
-2. `/config A highschool student who is bored`
-3. `/config A college student who is studying computer science`
+2. `/config Undergraduate, Visual, Friendly`
+3. `/config Elementary, Story Telling, Humorous`
 
-# Types of Configuations
+### **Method 3** - Describing yourself
 
-## Depth
-
-- Elementary (Grade 1-6)
-- Middle School (Grade 7-9)
-- High School (Grade 10-12)
-- Undergraduate
-- Graduate (Bachelor Degree)
-- Master's
-- Doctoral Candidate (Ph.D Candidate)
-- Postdoc
-- Ph.D
-
-## Learning style
-
-- Visual
-- Verbal
-- Active
-- Intuitive
-- Reflective
-- Global
-
-## Communication Style
-
-- Formal
-- Textbook
-- Layman
-- Story Telling
-- Socratic
-
-## Tone Style
-
-- Encouraging
-- Neutral
-- Informative
-- Friendly
-- Humorous
-
-## Reasoning Framework
-
-- Deductive
-- Inductive
-- Abductive
-- Analogical
-- Causal
-
-=======
-# Configuration Guide
-
-**Table of Contents**
-
-- [Configuration Guide](#configuration-guide)
-  - [ChatGPT Version](#chatgpt-version)
-    - [**Method 1** - Inside ChatGPT Website **(Recommended)**](#method-1---inside-chatgpt-website-recommended)
-    - [**Method 2** - Copy and Pasting the Prompt](#method-2---copy-and-pasting-the-prompt)
-    - [**Method 3** - `/config` command](#method-3---config-command)
-- [Types of Configuations](#types-of-configuations)
-  - [Depth](#depth)
-  - [Learning style](#learning-style)
-  - [Communication Style](#communication-style)
-  - [Tone Style](#tone-style)
-  - [Reasoning Framework](#reasoning-framework)
-
-## ChatGPT Version
-
-
-### **Method 1** - Inside ChatGPT Website **(Recommended)**
-
-1. In ChatGPT, scroll up to the top of the chat and click the edit button
-2. In the `[student configuration]` heading, change the configuration to whatever you prefer
-3. Scroll down and press the `Save & Submit` button.
-
-### **Method 2** - Copy and Pasting the Prompt
-
-1. Find the `[student configuration]` heading and change the configuration to whatever you prefer
-
-2. Copy and paste the Mr. Ranedeer prompt you changed into ChatGPT then press `Save & Continue`
-
-### **Method 3** - `/config` command
-
-There are many ways to use this command. However, it is recommended to use `/config` command by describing every preferences you want.
+You can also describe yourself and let Smart Learner configure automatically.
 
 **Examples**
 
-1. `/config Ph.D, Intuitive, Encouraging, Deductive`
-2. `/config A highschool student who is bored`
-3. `/config A college student who is studying computer science`
+1. `/config A high school student who is bored`
+2. `/config A college student studying computer science`
+3. `/config A visual learner who prefers humorous explanations`
 
-# Types of Configuations
+# Types of Configurations
 
 ## Depth
 
-- Elementary (Grade 1-6)
-- Middle School (Grade 7-9)
-- High School (Grade 10-12)
-- Undergraduate
-- Graduate (Bachelor Degree)
-- Master's
-- Doctoral Candidate (Ph.D Candidate)
-- Postdoc
-- Ph.D
+The academic level of content:
 
-## Learning style
+- **Elementary (Grade 1-6)** - Simple concepts, concrete examples
+- **Middle School (Grade 7-9)** - Introduction to abstract concepts
+- **High School (Grade 10-12)** - Standard academic content
+- **Undergraduate** - College-level depth
+- **Graduate (Bachelor Degree)** - Advanced academic content
+- **Master's** - Specialized knowledge
+- **Doctoral Candidate (Ph.D Candidate)** - Research-level depth
+- **Postdoc** - Expert-level content
+- **Ph.D** - Cutting-edge academic depth
 
-- Visual
-- Verbal
-- Active
-- Intuitive
-- Reflective
-- Global
+## Learning Style
+
+How you prefer to receive information:
+
+- **Visual** - Learn through images, diagrams, and spatial understanding
+- **Verbal** - Learn through words, reading, and discussions
+- **Active** - Learn by doing and experimenting
+- **Intuitive** - Learn through concepts and theories
+- **Reflective** - Learn by thinking deeply and analyzing
+- **Global** - Learn by seeing the big picture first
 
 ## Communication Style
 
-- Formal
-- Textbook
-- Layman
-- Story Telling
-- Socratic
+How the tutor presents information:
+
+- **Formal** - Academic and precise language
+- **Textbook** - Structured, educational approach
+- **Layman** - Simple, everyday language
+- **Story Telling** - Learning through narratives
+- **Socratic** - Learning through guided questions
 
 ## Tone Style
 
-- Encouraging
-- Neutral
-- Informative
-- Friendly
-- Humorous
+The emotional tone of instruction:
+
+- **Encouraging** - Positive and motivating
+- **Neutral** - Balanced and objective
+- **Informative** - Fact-focused and educational
+- **Friendly** - Warm and approachable
+- **Humorous** - Light-hearted with appropriate humor
 
 ## Reasoning Framework
 
-- Deductive
-- Inductive
-- Abductive
-- Analogical
-- Causal
+How concepts are explained:
 
->>>>>>> 3-update-bot-name
+- **Deductive** - From general principles to specific conclusions
+- **Inductive** - From specific examples to general principles
+- **Abductive** - Finding the best explanation for observations
+- **Analogical** - Understanding through comparisons
+- **Causal** - Understanding cause and effect relationships
